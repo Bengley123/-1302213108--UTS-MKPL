@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Employee {
+	private TaxCalculator taxCalculator; // deklarasi variabel yang ada pada metode calculateAnnualIncomeTax dalam memperbaiki code smell fiture envy
 
 	private static final int SALARY_GRADE_1 = 3000000;
     private static final int SALARY_GRADE_2 = 5000000;
