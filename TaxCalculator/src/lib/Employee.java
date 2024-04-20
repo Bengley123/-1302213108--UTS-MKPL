@@ -49,14 +49,18 @@ public class Employee {
 		this.lastName = lastName;
 		this.idNumber = idNumber;
 		this.address = address;
-		this.yearJoined = yearJoined;
-		this.monthJoined = monthJoined;
-		this.dayJoined = dayJoined;
+		//primitive obsesion
+		// this.yearJoined = yearJoined;
+		// this.monthJoined = monthJoined;
+		// this.dayJoined = dayJoined;
+		this.joinedDate = joinedDate;
 		this.isForeigner = isForeigner;
-		this.gender = gender;
+		this.isMale = isMale;
+		this.children = new ArrayList<>();
 		
-		childNames = new LinkedList<String>();
-		childIdNumbers = new LinkedList<String>();
+		//primitive obsesion
+		// childNames = new LinkedList<String>();
+		// childIdNumbers = new LinkedList<String>();
 	}
 	
 	/**
@@ -85,19 +89,56 @@ public class Employee {
 
 	
 	public void setSpouse(String spouseName, String spouseIdNumber) {
-		this.spouseName = spouseName;
-		this.spouseIdNumber = idNumber;
+		this.spouse = new spouse(spouseName, spouseIdNumber); //menggabungkan struktur data yang lebih kohesif pada Spouse
+		//data clumps
+		// this.spouseName = spouseName;
+		// this.spouseIdNumber = idNumber;
 	}
 	
 	public void addChild(String childName, String childIdNumber) {
-		childNames.add(childName);
-		childIdNumbers.add(childIdNumber);
+		children.add(new Child(childName, childIdNumber)); //menggabungkan struktur data yang lebih kohesif pada child
+		//data clumps
+		// childNames.add(childName);
+		// childIdNumbers.add(childIdNumber);
 	}
+	//Long Method
+// 	public int getAnnualIncomeTax() {
+//         LocalDate date = LocalDate.now();
+//         monthWorkingInYear = (date.getYear() == yearJoined) ? date.getMonthValue() - monthJoined : 12;
+//         return TaxFunction.calculateTax(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouseIdNumber.equals(""), childIdNumbers.size());
+//     }
 	
-	public int getAnnualIncomeTax() {
-        LocalDate date = LocalDate.now();
-        monthWorkingInYear = (date.getYear() == yearJoined) ? date.getMonthValue() - monthJoined : 12;
-        return TaxFunction.calculateTax(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouseIdNumber.equals(""), childIdNumbers.size());
-    }
+	// Solusi refactor dalam menanggulangi Long Method di function getAnnualIncomeTax
+	public int calculateAnnualIncomeTax() {
+        LocalDate currentDate = LocalDate.now();
+        int monthsWorkedInYear = (currentDate.getYear() == joinedDate.getYear()) ? currentDate.getMonthValue() - joinedDate.getMonthValue() : 12;
+        return TaxCalculator.calculateTax(monthlySalary, otherMonthlyIncome, monthsWorkedInYear, annualDeductible, spouse.isSpouseExist(), children.size());
+    }
+
+	// Inner class to represent Spouse
+		private class Spouse {
+			private String name;
+			private String idNumber;
+
+			public Spouse(String name, String idNumber) {
+				this.name = name;
+				this.idNumber = idNumber;
+			}
+
+			public boolean isSpouseExist() {
+				return name != null && !name.isEmpty() && idNumber != null && !idNumber.isEmpty();
+			}
+		}
+
+	 // Inner class to represent Child
+		private class Child {
+			private String name;
+			private String idNumber;
+
+			public Child(String name, String idNumber) {
+				this.name = name;
+				this.idNumber = idNumber;
+			}
+		}
 
 }
