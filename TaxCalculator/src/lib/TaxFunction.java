@@ -2,22 +2,13 @@ package lib;
 
 public class TaxFunction {
 
+	//pembuaatan konstanta untuk menghindari magic numbers
 	private static final int TAX_RATE = 5;
     private static final int STANDARD_DEDUCTIBLE = 54000000;
     private static final int MARRIED_DEDUCTIBLE_INCREASE = 4500000;
     private static final int CHILD_DEDUCTIBLE_PER_CHILD = 1500000;
     private static final int MAX_CHILDREN_FOR_DEDUCTIBLE = 3;
 	
-	/**
-	 * Fungsi untuk menghitung jumlah pajak penghasilan pegawai yang harus dibayarkan setahun.
-	 * 
-	 * Pajak dihitung sebagai 5% dari penghasilan bersih tahunan (gaji dan pemasukan bulanan lainnya dikalikan jumlah bulan bekerja dikurangi pemotongan) dikurangi penghasilan tidak kena pajak.
-	 * 
-	 * Jika pegawai belum menikah dan belum punya anak maka penghasilan tidak kena pajaknya adalah Rp 54.000.000.
-	 * Jika pegawai sudah menikah maka penghasilan tidak kena pajaknya ditambah sebesar Rp 4.500.000.
-	 * Jika pegawai sudah memiliki anak maka penghasilan tidak kena pajaknya ditambah sebesar Rp 4.500.000 per anak sampai anak ketiga.
-	 * 
-	 */
 	
 	
 	public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int numberOfMonthWorking, int deductible, boolean isMarried, int numberOfChildren) {
@@ -30,17 +21,19 @@ public class TaxFunction {
 		// if (numberOfChildren > 3) {
 		// 	numberOfChildren = 3;
 		// }
+
+		//Pengkondisian ini mengandung banyak parameter primitif obsesion yang tidak efisien ketika digunakan dan terkesan tidak rapi
 		// if (isMarried) {
 		// 	tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - (54000000 + 4500000 + (numberOfChildren * 1500000))));
 		// }else {
 		// 	tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - 54000000));
 		// }
 
-		int totalIncome = calculateTotalIncome(monthlySalary, otherMonthlyIncome, numberOfMonthsWorked);
-        int totalDeductible = calculateTotalDeductible(annualDeductible, isMarried, numberOfChildren);
+		int totalIncome = calculateTotalIncome(monthlySalary, otherMonthlyIncome, numberOfMonthsWorked); //proses refactoring dengan digabungkan nya parameter-parameter primitif menjadi satu objek
+        int totalDeductible = calculateTotalDeductible(annualDeductible, isMarried, numberOfChildren); //proses refactoring dengan digabungkan nya parameter-parameter primitif menjadi satu objek
 
-        int taxableIncome = totalIncome - totalDeductible;
-        int tax = (int) Math.round(TAX_RATE * taxableIncome / 100);
+        int taxableIncome = totalIncome - totalDeductible;//proses refactoring dengan digabungkan nya parameter-parameter primitif menjadi satu objek
+        int tax = (int) Math.round(TAX_RATE * taxableIncome / 100);//proses refactoring dengan digabungkan nya parameter-parameter primitif menjadi satu objek
 
         return Math.max(tax, 0); // Ensure tax is non-negative
 			 
@@ -48,7 +41,7 @@ public class TaxFunction {
 	//metode yang dibagi menjadi metode tersendiri di setiap tugas nya agar mengurangi Long method di setiap metode masing-masing
 	private static void validateMonthsWorked(int numberOfMonthsWorked) { 
         if (numberOfMonthsWorked > 12) {
-            throw new IllegalArgumentException("Number of months worked per year exceeds 12"); //disini memakai teknik exception tanpa harus penhkondisian sebagai cara penanggulangan Long Method yang banyak seperti sebelumnya
+            throw new IllegalArgumentException("Number of months worked per year exceeds 12"); //disini memakai teknik exception tanpa harus pengkondisian sebagai cara penanggulangan Long Method yang banyak seperti sebelumnya
         }
     }
 	//metode yang dibagi menjadi metode tersendiri di setiap tugas nya agar mengurangi Long method di setiap metode masing-masing
