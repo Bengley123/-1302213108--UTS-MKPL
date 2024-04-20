@@ -57,6 +57,7 @@ public class Employee {
 		this.isForeigner = isForeigner;
 		this.isMale = isMale;
 		this.children = new ArrayList<>();
+		this.taxCalculator = new TaxCalculator();  // deklarasi konstruktor untuk kelas employee yang terhubung dengan metode calculateAnnualIncomeTax dalam memperbaiki code smell fiture envy
 		
 		//primitive obsesion
 		// childNames = new LinkedList<String>();
@@ -108,12 +109,13 @@ public class Employee {
 //         return TaxFunction.calculateTax(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouseIdNumber.equals(""), childIdNumbers.size());
 //     }
 	
-	// Solusi refactor dalam menanggulangi Long Method di function getAnnualIncomeTax
+	// Solusi refactor dalam menanggulangi Long Method di function getAnnualIncomeTax dan juga ini jadi solusi dalam code smell fiture envy
 	public int calculateAnnualIncomeTax() {
         LocalDate currentDate = LocalDate.now();
         int monthsWorkedInYear = (currentDate.getYear() == joinedDate.getYear()) ? currentDate.getMonthValue() - joinedDate.getMonthValue() : 12;
         return TaxCalculator.calculateTax(monthlySalary, otherMonthlyIncome, monthsWorkedInYear, annualDeductible, spouse.isSpouseExist(), children.size());
     }
+
 
 	// Inner class to represent Spouse
 		private class Spouse {
