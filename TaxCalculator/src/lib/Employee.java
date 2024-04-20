@@ -17,23 +17,31 @@ public class Employee {
 	private String idNumber;
 	private String address;
 	
-	private int yearJoined;
-	private int monthJoined;
-	private int dayJoined;
-	private int monthWorkingInYear;
-	
+	//Primitive Obsesion
+	// private int yearJoined;
+	// private int monthJoined;
+	// private int dayJoined;
+	// private int monthWorkingInYear;
+
+	private LocalDate joinedDate; //menggantikan penggunaan data primitive pada date, dan tentunya lebih kaya
 	private boolean isForeigner;
-	private boolean gender; //true = Laki-laki, false = Perempuan
+	private boolean isMale; 
 	
 	private int monthlySalary;
 	private int otherMonthlyIncome;
 	private int annualDeductible;
 	
-	private String spouseName;
-	private String spouseIdNumber;
+	//primitive Obsesion
+	// private String spouseName;
+	// private String spouseIdNumber;
+	//Primitive Obsesion
+	// private List<String> childNames;
+	// private List<String> childIdNumbers;
 
-	private List<String> childNames;
-	private List<String> childIdNumbers;
+	private Spouse spouse; 
+	private List<Child> children; //menggantikan penggunaan data primitive pada pembagian data child yang terlalu banyak, dan tentunya lebih kaya
+
+
 	
 	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
 		this.employeeId = employeeId;
